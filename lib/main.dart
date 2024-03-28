@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, avoid_unnecessary_containers
+// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, avoid_unnecessary_containers, unnecessary_import
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +33,7 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
+  List<Icon> scorekeeper = [];
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -40,21 +41,21 @@ class _QuizPageState extends State<QuizPage> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         Expanded(
-            flex: 5,
-            child: Center(
-              child: Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(
-                  'This is where the questions will go.',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 25.0,
-                  ),
+          flex: 5,
+          child: Center(
+            child: Padding(
+              padding: EdgeInsets.all(10.0),
+              child: Text(
+                'This is where the questions will go.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 25.0,
                 ),
               ),
-            )),
-            
+            ),
+          ),
+        ),
         Expanded(
           flex: 1,
           child: Padding(
@@ -62,17 +63,21 @@ class _QuizPageState extends State<QuizPage> {
             child: Container(
               color: Colors.green,
               child: TextButton(
-                onPressed: (){
-                     //PressTrue
+                onPressed: () {
+                  setState(() {
+                    scorekeeper.add(
+                      Icon(
+                        Icons.check,
+                        color: Colors.green,
+                      )
+                    );
+                  });
                 },
                 child: Text('True'),
               ),
             ),
           ),
         ),
-        SizedBox(
-              height:10.0,
-            ),
         Expanded(
           flex: 1,
           child: Padding(
@@ -80,14 +85,24 @@ class _QuizPageState extends State<QuizPage> {
             child: Container(
               color: Colors.red,
               child: TextButton(
-                onPressed: (){
-                     //PressedFalse
+                onPressed: () {
+                  setState(() {
+                    scorekeeper.add(
+                      Icon(
+                        Icons.close,
+                        color: Colors.red,
+                      )
+                    );
+                  });
                 },
                 child: Text('False'),
               ),
             ),
           ),
         ),
+        Row(
+          children: scorekeeper,
+        )
       ],
     );
   }
