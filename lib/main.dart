@@ -3,6 +3,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:quizzler/question.dart';
 
 void main() => runApp(Quizzler());
 
@@ -34,14 +35,21 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scorekeeper = []; //SCOREKEEPER
-  List<String> questions = [
-    'You can lead a cow down stairs but not up stairs.',
-    'Approximately one quarter of human bones are in the feet.',
-    'A slug\'s blood is green.'
+  // List<String> questions = [
+  //   'You can lead a cow down stairs but not up stairs.',
+  //   'Approximately one quarter of human bones are in the feet.',
+  //   'A slug\'s blood is green.'
+  // ];
+
+  // List<bool> answers = [false, true, true];
+
+  // Question q1 = Question(q: 'You can lead a cow down stairs but not up stairs.', a: false);
+  List<Question> questionBank =[
+    Question(q: 'You can lead a cow down stairs but not up stairs.', a: false),
+    Question(q: 'Approximately one quarter of human bones are in the feet.', a: true),
+    Question(q: 'A slug\'s blood is green.', a: true),
   ];
-
-  List<bool> answers = [false, true, true];
-
+  
   int questionNumber = 0;
 
   @override
@@ -56,7 +64,7 @@ class _QuizPageState extends State<QuizPage> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Text(
-                questions[questionNumber],
+                questionBank[questionNumber].questionText,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
@@ -74,7 +82,7 @@ class _QuizPageState extends State<QuizPage> {
               color: Colors.green,
               child: TextButton(
                 onPressed: () {
-                  bool correctanswer = answers[questionNumber];
+                  bool correctanswer = questionBank[questionNumber].questionanswer;
 
                   setState(() {
                     questionNumber = questionNumber + 1;
@@ -104,7 +112,7 @@ class _QuizPageState extends State<QuizPage> {
               color: Colors.red,
               child: TextButton(
                 onPressed: () {
-                  bool correctanswer = answers[questionNumber];
+                  bool correctanswer = questionBank[questionNumber].questionanswer;
                   setState(() {
                     questionNumber = questionNumber + 1;
                     if (correctanswer == false) {
