@@ -33,7 +33,17 @@ class QuizPage extends StatefulWidget {
 }
 
 class _QuizPageState extends State<QuizPage> {
-  List<Icon> scorekeeper = [];
+  List<Icon> scorekeeper = []; //SCOREKEEPER
+  List<String> questions = [
+    'You can lead a cow down stairs but not up stairs.',
+    'Approximately one quarter of human bones are in the feet.',
+    'A slug\'s blood is green.'
+  ];
+
+  List<bool> answers = [false, true, true];
+
+  int questionNumber = 0;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -46,7 +56,7 @@ class _QuizPageState extends State<QuizPage> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Text(
-                'This is where the questions will go.',
+                questions[questionNumber],
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
@@ -64,13 +74,21 @@ class _QuizPageState extends State<QuizPage> {
               color: Colors.green,
               child: TextButton(
                 onPressed: () {
+                  bool correctanswer = answers[questionNumber];
+
                   setState(() {
-                    scorekeeper.add(
-                      Icon(
+                    questionNumber = questionNumber + 1;
+                    if (correctanswer == true) {
+                      scorekeeper.add(Icon(
                         Icons.check,
                         color: Colors.green,
-                      )
-                    );
+                      ));
+                    } else {
+                      scorekeeper.add(Icon(
+                        Icons.close,
+                        color: Colors.red,
+                      ));
+                    }
                   });
                 },
                 child: Text('True'),
@@ -86,13 +104,20 @@ class _QuizPageState extends State<QuizPage> {
               color: Colors.red,
               child: TextButton(
                 onPressed: () {
+                  bool correctanswer = answers[questionNumber];
                   setState(() {
-                    scorekeeper.add(
-                      Icon(
+                    questionNumber = questionNumber + 1;
+                    if (correctanswer == false) {
+                       scorekeeper.add(Icon(
+                        Icons.check,
+                        color: Colors.green,
+                      ));
+                    } else {
+                      scorekeeper.add(Icon(
                         Icons.close,
                         color: Colors.red,
-                      )
-                    );
+                      ));
+                    }
                   });
                 },
                 child: Text('False'),
