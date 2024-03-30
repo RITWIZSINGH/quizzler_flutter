@@ -1,9 +1,12 @@
-// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, avoid_unnecessary_containers, unnecessary_import
+// ignore_for_file: prefer_const_constructors, library_private_types_in_public_api, avoid_unnecessary_containers, unnecessary_import, unused_import
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:quizzler/question.dart';
+import 'question.dart';
+import 'quiz_brain.dart';
+
+QuizBrain quizBrain = QuizBrain();
 
 void main() => runApp(Quizzler());
 
@@ -44,11 +47,7 @@ class _QuizPageState extends State<QuizPage> {
   // List<bool> answers = [false, true, true];
 
   // Question q1 = Question(q: 'You can lead a cow down stairs but not up stairs.', a: false);
-  List<Question> questionBank =[
-    Question(q: 'You can lead a cow down stairs but not up stairs.', a: false),
-    Question(q: 'Approximately one quarter of human bones are in the feet.', a: true),
-    Question(q: 'A slug\'s blood is green.', a: true),
-  ];
+  
   
   int questionNumber = 0;
 
@@ -64,7 +63,7 @@ class _QuizPageState extends State<QuizPage> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Text(
-                questionBank[questionNumber].questionText,
+                quizBrain.questionBank[questionNumber].questionText,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
@@ -82,7 +81,7 @@ class _QuizPageState extends State<QuizPage> {
               color: Colors.green,
               child: TextButton(
                 onPressed: () {
-                  bool correctanswer = questionBank[questionNumber].questionanswer;
+                  bool correctanswer = quizBrain.questionBank[questionNumber].questionanswer;
 
                   setState(() {
                     questionNumber = questionNumber + 1;
@@ -112,7 +111,7 @@ class _QuizPageState extends State<QuizPage> {
               color: Colors.red,
               child: TextButton(
                 onPressed: () {
-                  bool correctanswer = questionBank[questionNumber].questionanswer;
+                  bool correctanswer = quizBrain.questionBank[questionNumber].questionanswer;
                   setState(() {
                     questionNumber = questionNumber + 1;
                     if (correctanswer == false) {
