@@ -49,7 +49,7 @@ class _QuizPageState extends State<QuizPage> {
   // Question q1 = Question(q: 'You can lead a cow down stairs but not up stairs.', a: false);
   
   
-  int questionNumber = 0;
+  
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class _QuizPageState extends State<QuizPage> {
             child: Padding(
               padding: EdgeInsets.all(10.0),
               child: Text(
-                quizBrain.questionBank[questionNumber].questionText,
+                quizBrain.getQuestionText(),
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Colors.white,
@@ -81,10 +81,10 @@ class _QuizPageState extends State<QuizPage> {
               color: Colors.green,
               child: TextButton(
                 onPressed: () {
-                  bool correctanswer = quizBrain.questionBank[questionNumber].questionanswer;
+                  bool correctanswer = quizBrain.getQuestionAnswer();
 
                   setState(() {
-                    questionNumber = questionNumber + 1;
+                    quizBrain.nextQuestion();
                     if (correctanswer == true) {
                       scorekeeper.add(Icon(
                         Icons.check,
@@ -111,9 +111,9 @@ class _QuizPageState extends State<QuizPage> {
               color: Colors.red,
               child: TextButton(
                 onPressed: () {
-                  bool correctanswer = quizBrain.questionBank[questionNumber].questionanswer;
+                  bool correctanswer = quizBrain.getQuestionAnswer();
                   setState(() {
-                    questionNumber = questionNumber + 1;
+                    quizBrain.nextQuestion();
                     if (correctanswer == false) {
                        scorekeeper.add(Icon(
                         Icons.check,
