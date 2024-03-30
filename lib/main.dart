@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'question.dart';
 import 'quiz_brain.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 QuizBrain quizBrain = QuizBrain();
 
@@ -38,18 +39,34 @@ class QuizPage extends StatefulWidget {
 
 class _QuizPageState extends State<QuizPage> {
   List<Icon> scorekeeper = []; //SCOREKEEPER
-  // List<String> questions = [
-  //   'You can lead a cow down stairs but not up stairs.',
-  //   'Approximately one quarter of human bones are in the feet.',
-  //   'A slug\'s blood is green.'
-  // ];
 
-  // List<bool> answers = [false, true, true];
-
-  // Question q1 = Question(q: 'You can lead a cow down stairs but not up stairs.', a: false);
-  
-  
-  
+  void checkAnswer(bool userPickedAnswer) {
+    bool correctanswer = quizBrain.getQuestionAnswer();
+    setState(() {
+      quizBrain.nextQuestion();
+      if (quizBrain.isFinished() == true) {
+        Alert(
+                context: context,
+                title: "QUESTIONS OVER",
+                desc: "You have attempted all the questions.")
+            .show();
+        quizBrain.reset();
+        scorekeeper = [];
+      } else {
+        if (correctanswer == userPickedAnswer) {
+          scorekeeper.add(Icon(
+            Icons.check,
+            color: Colors.green,
+          ));
+        } else {
+          scorekeeper.add(Icon(
+            Icons.close,
+            color: Colors.red,
+          ));
+        }
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -81,22 +98,7 @@ class _QuizPageState extends State<QuizPage> {
               color: Colors.green,
               child: TextButton(
                 onPressed: () {
-                  bool correctanswer = quizBrain.getQuestionAnswer();
-
-                  setState(() {
-                    quizBrain.nextQuestion();
-                    if (correctanswer == true) {
-                      scorekeeper.add(Icon(
-                        Icons.check,
-                        color: Colors.green,
-                      ));
-                    } else {
-                      scorekeeper.add(Icon(
-                        Icons.close,
-                        color: Colors.red,
-                      ));
-                    }
-                  });
+                  checkAnswer(true);
                 },
                 child: Text('True'),
               ),
@@ -111,21 +113,7 @@ class _QuizPageState extends State<QuizPage> {
               color: Colors.red,
               child: TextButton(
                 onPressed: () {
-                  bool correctanswer = quizBrain.getQuestionAnswer();
-                  setState(() {
-                    quizBrain.nextQuestion();
-                    if (correctanswer == false) {
-                       scorekeeper.add(Icon(
-                        Icons.check,
-                        color: Colors.green,
-                      ));
-                    } else {
-                      scorekeeper.add(Icon(
-                        Icons.close,
-                        color: Colors.red,
-                      ));
-                    }
-                  });
+                  checkAnswer(false);
                 },
                 child: Text('False'),
               ),

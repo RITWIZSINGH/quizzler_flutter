@@ -1,6 +1,6 @@
 
 
-// ignore_for_file: prefer_final_fields
+// ignore_for_file: prefer_final_fields, no_leading_underscores_for_local_identifiers
 
 import 'question.dart';
 
@@ -46,5 +46,19 @@ class QuizBrain {
   }
   bool getQuestionAnswer(){
     return _questionBank[_questionNumber].questionanswer;
+  }
+
+  bool isFinished(){
+    if (_questionNumber  >= _questionBank.length-1){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+
+  void reset(){
+     _questionNumber = 0;
+     
   }
 }
